@@ -1,0 +1,15 @@
+tasks:
+  - init: cd final/server && npm install && cd ../client && npm install
+  - command: > 
+      gp env REACT_APP_ENDPOINT=$(gp url 4000)/graphql &&
+      cd final/server &&
+      npm start
+  - command: >
+      cd final/client &&
+      gp await-port 4000 && npm start
+  - command: >
+      gp await-port 3000 && gp preview $(gp url 3000)
+
+ports:
+  - port: 3000
+    onOpen: ignore
